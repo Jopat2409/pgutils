@@ -19,6 +19,7 @@ numpy = [
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
 pytest-cov = "^5.0.0"
+python-semantic-release = "^9.8.7"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
