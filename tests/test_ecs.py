@@ -50,4 +50,4 @@ def test_register_component(controller):
         controller.register_component(Test)
 
 def test_add_component(controller):
-    pass
+    assert False
