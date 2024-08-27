@@ -1,6 +1,7 @@
 import pytest
 
 from pgutils.ecs import components
+from pgutils.ecs.controller import ECSException
 
 @pytest.fixture
 def controller():
@@ -13,7 +14,7 @@ def test_register_component_uninitialised():
     from pgutils.ecs.controller import Controller
 
     # Can't register components on uninitialised controller
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ECSException):
         Controller.register_component(components.Transform)
 
 
@@ -35,7 +36,7 @@ def test_register_component(controller):
     assert Render.ECS_COMPONENT_INDEX == 2
 
     # Can't add the same component
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ECSException):
         controller.register_component(components.Transform)
 
     # Can't add more than 63 custom components
@@ -44,7 +45,7 @@ def test_register_component(controller):
             pass
         controller.register_component(Test)
 
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ECSException):
         class Test:
             pass
         controller.register_component(Test)
