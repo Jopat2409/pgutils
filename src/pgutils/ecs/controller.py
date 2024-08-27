@@ -1,5 +1,8 @@
 import numpy as np
 
+class ECSException(Exception):
+    pass
+
 class Controller:
 
     initialised = False
@@ -11,6 +14,12 @@ class Controller:
 
     def init(max_entities: int = 1e3,
                 register_defaults: bool = True):
+        """_summary_
+
+        Args:
+            max_entities (int, optional): _description_. Defaults to 1e3.
+            register_defaults (bool, optional): _description_. Defaults to True.
+        """
 
         Controller.config["max-ents"] = int(max_entities)
         Controller.components.append(
@@ -35,15 +44,15 @@ class Controller:
     def register_component(component: object) -> None:
 
         if hasattr(component, "ECS_COMPONENT_INDEX"):
-            raise RuntimeError("This component has already been registered.")
+            raise ECSException("This component has already been registered.")
 
         if not Controller.initialised:
-            raise RuntimeError("You must initialise the ECS controller before adding any components or systems. See ecs.Controller.initialise for more info.")
+            raise ECSException("You must initialise the ECS controller before adding any components or systems. See ecs.Controller.initialise for more info.")
 
         next_index = len(Controller.components)
 
         if next_index >= 64:
-            raise RuntimeError("Maximum unique components reached (>64). This will be changed in a later version")
+            raise ECSException("Maximum unique components reached (>64). This will be changed in a later version")
 
         component.ECS_COMPONENT_INDEX = next_index
         Controller.components.append(np.ndarray([Controller.config["max-ents"]], dtype=component))
