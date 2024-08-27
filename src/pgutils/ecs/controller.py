@@ -16,14 +16,12 @@ class Controller:
         Controller.components.append(
             np.ndarray([max_entities], dtype=int)
         )
+
         if register_defaults:
             from pgutils.ecs.components import Transform, Render
-            Controller.register_component(Transform)
-            Controller.register_component(Render)
-        Controller.initialised = True
+            Controller.register_components(Transform, Render)
 
-        """ if register_defaults:
-            Controller.register_default_components() """
+        Controller.initialised = True
 
     def reset():
         print("Resetting Controller")
@@ -49,4 +47,8 @@ class Controller:
 
         component.ECS_COMPONENT_INDEX = next_index
         Controller.components.append(np.ndarray([Controller.config["max-ents"]], dtype=component))
+
+    def register_components(*components) -> None:
+        map(Controller.register_component, components)
+
 
