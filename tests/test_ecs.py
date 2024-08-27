@@ -66,3 +66,7 @@ def test_get_component_mask(controller):
     assert controller.get_component_mask(components.Transform, components.Render) == 6
     assert controller.get_component_mask(components.Transform, components.Render) & 2
     assert controller.get_component_mask(components.Transform, components.Render) & 4
+
+def test_get_next_entity(controller):
+    for i in range(0, 1000):
+        assert controller.get_next_entity_index() == i

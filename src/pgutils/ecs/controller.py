@@ -126,7 +126,7 @@ class Controller:
         int
             The index of the last freed entity
         """
-        next_ent = Controller.next_entities[-1]
+        next_ent = Controller.next_entities.pop(-1)
         if not Controller.next_entities:
             Controller.next_entities.append(next_ent + 1)
         return next_ent
